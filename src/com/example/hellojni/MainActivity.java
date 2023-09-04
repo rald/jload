@@ -17,19 +17,20 @@ public class MainActivity extends Activity {
   static public native String stringFromJNI();
   static public native String unimplementedStringFromJNI();
 
+  EditText edtPath;
+	Button btnLoad;
+
+
 
   private void load(String p) {
     try {
       System.load(p);
     } catch(Exception e) {
-      Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-      
+      edtPath.setText(e.getMessage());
     }
   }
 
 
-	EditText edtPath;
-	Button btnLoad;
 
   @Override
   protected void onCreate(Bundle bundle) {
