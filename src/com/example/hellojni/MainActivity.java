@@ -8,14 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import android.view.View;
+import android.os.Environment;
 
+import java.io.File;
 
 
 public class MainActivity extends Activity {
 
 
-  public native String stringFromJNI();
-  public native String unimplementedStringFromJNI();
+  static public native String stringFromJNI();
+  static public native String unimplementedStringFromJNI();
 
 
   private void load(String p) {
@@ -37,7 +39,10 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
 
 		path = (EditText) findViewById(R.id.editText1);
-    path.setText("/storage/emulated/0/Downloads/libhello-jni.so");
+
+    File dl = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+		
+    path.setText(dl.getAbsolutePath()+"/libhello-jni.so");
 
 		load = (Button) findViewById(R.id.button1);
 		
@@ -49,7 +54,7 @@ public class MainActivity extends Activity {
 
         load(p);
 
-        path.setText(stringFromHelloJNI());
+        path.setText(stringFromJNI());
 
 	    }
 		});
