@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.view.View;
 import android.os.Environment;
 
-import java.io.File;
-
 
 public class MainActivity extends Activity {
 
@@ -30,31 +28,34 @@ public class MainActivity extends Activity {
   }
 
 
-	EditText path;
-	Button load;
+	EditText edtPath;
+	Button btnLoad;
 
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setContentView(R.layout.activity_main);
 
-		path = (EditText) findViewById(R.id.editText1);
+		edtPath = (EditText) findViewById(R.id.editText1);
+		btnLoad = (Button) findViewById(R.id.button1);	
 
-    File dl = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-		
-    path.setText(dl.getAbsolutePath()+"/libhello-jni.so");
 
-		load = (Button) findViewById(R.id.button1);
-		
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		    String dl = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
 
-		load.setOnClickListener(new View.OnClickListener() {
+	    edtPath.setText(dl+"/libhello-jni.so");
+
+		}
+
+
+		btnLoad.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				String p=path.getText().toString();
+				String p=edtPath.getText().toString();
 
         load(p);
 
-        path.setText(stringFromJNI());
+        edtPath.setText(stringFromJNI());
 
 	    }
 		});
